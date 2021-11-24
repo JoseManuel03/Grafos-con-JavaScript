@@ -2,13 +2,13 @@ let nodes = [];
 let selectedNode = null;
 let arcos = [];
 
-function getNodeAt(x, y, nodes) { //calcula la distincia enter un nodo y otro
+function getNodeAt(x, y, nodes) {
   for (let index = 0; index < nodes.length; index++) {
     const node = nodes[index];
     const a = x - node.x;
     const b = y - node.y;
 
-    const c = Math.sqrt(a * a + b * b); //formula para calcular la distancia de una vertice a otra
+    const c = Math.sqrt(a * a + b * b);
 
     if (c < 90) {
       return node;
@@ -17,7 +17,7 @@ function getNodeAt(x, y, nodes) { //calcula la distincia enter un nodo y otro
   return null;
 }
 
-function drawNodes(ctx, nodes) { //se cambia el color del numero del nodo al seleccionarlo
+function drawNodes(ctx, nodes) {
   for (let index = 0; index < nodes.length; index++) {
     const node = nodes[index];
 
@@ -27,25 +27,25 @@ function drawNodes(ctx, nodes) { //se cambia el color del numero del nodo al sel
       ctx.strokeStyle = "#000000";
     }
 
-    ctx.beginPath(); //aqui se genera los circulos o vertices del grafo
-    ctx.lineWidth = 5; // se cambia el grosor del vertice
+    ctx.beginPath();
+    ctx.lineWidth = 5;
     ctx.fillStyle = "#FFFFFF";
     ctx.arc(node.x, node.y, 40, 0, 2 * Math.PI);
     ctx.stroke();
     ctx.fill();
 
-    if (node === selectedNode) { // cambiar el color de un nodo al seleccionarlo
+    if (node === selectedNode) {
       ctx.fillStyle = "#FF0000";
     } else {
       ctx.fillStyle = "#000000";
     }
 
-    ctx.font = "30px Arial"; //escribe la numeracion de los nodos
+    ctx.font = "30px Arial";
     ctx.fillText(index, node.x - 5, node.y + 5);
   }
 }
 
-function drawArcos(ctx, arcos) { 
+function drawArcos(ctx, arcos) {
   for (let index = 0; index < arcos.length; index++) {
     const arco = arcos[index];
     ctx.moveTo(arco.node1.x, arco.node1.y);
@@ -55,11 +55,11 @@ function drawArcos(ctx, arcos) {
   }
 }
 
-window.onload = async () => { //genera las aristas
+window.onload = async () => {
   var canvas = document.getElementById("myCanvas");
   var context = canvas.getContext("2d");
 
-  canvas.addEventListener("click", (e) => { //se genera el circulo al dar click
+  canvas.addEventListener("click", (e) => {
     let x = e.clientX - canvas.offsetLeft;
     let y = e.clientY - canvas.offsetTop;
 
@@ -75,13 +75,13 @@ window.onload = async () => { //genera las aristas
       tempNode = null;
     }
 
-    if (selectedNode === null) { //esto es para no permitir dibijar un nodo sobre otro
+    if (selectedNode === null) {
       nodes.push({ x, y });
     }
 
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    if (selectedNode !== null && tempNode !== null) { //dibuja el arco de un nodo al otro
+    if (selectedNode !== null && tempNode !== null) { 
       arcos.push({ node1: selectedNode, node2: tempNode });
       selectedNode = null;
       tempNode = null;
